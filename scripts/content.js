@@ -1,5 +1,16 @@
 // Constants
-const BASE_URI = 'https://claude.ai/api/organizations/efd0b429-39d4-4ed6-8bec-94fcac7d83dc/chat_conversations';
+const BASE_URI = 'https://claude.ai/api/organizations';
+
+const getOrganizationId = () => {
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    cookie = cookie.trim();
+    if (cookie.startsWith('lastActiveOrg=')) {
+      return cookie.substring('lastActiveOrg='.length, cookie.length);
+    }
+  }
+  return null;
+}
 
 // Utility functions
 const parseId = (href) => href.split('/').pop();
@@ -7,7 +18,7 @@ const getIdFromLink = (link) => parseId(link.getAttribute('href'));
 
 // API functions
 const deleteConversation = async (chatId) => {
-  const response = await fetch(`${BASE_URI}/${chatId}`, { method: 'DELETE' });
+  const response = await fetch(`${BASE_URI}/${getOrganizationId()}/chat_conversations/${chatId}`, { method: 'DELETE' });
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
   return response;
 };
