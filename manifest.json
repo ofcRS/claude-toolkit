@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Toolkit for Claude AI",
+  "description": "Allows you to manage your chat history and other settings for Claude AI",
+  "version": "1.0",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://claude.ai/recents"],
+      "js": ["scripts/content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
